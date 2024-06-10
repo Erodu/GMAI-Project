@@ -201,6 +201,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         {
             ParentCurrentWeapon(sheathTransform);
             TriggerAnimation(sheatheParam);
+            anim.ResetTrigger(drawParam);
 
         }
 
