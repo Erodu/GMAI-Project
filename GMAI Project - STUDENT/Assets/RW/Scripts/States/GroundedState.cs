@@ -45,19 +45,29 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         {
         }
 
-        public void PlayerInputs()
+        public override void Enter()
         {
-            horizontalInput = Input.GetAxis("Horizontal");
-            verticalInput = Input.GetAxis("Vertical");
-
-            speed = verticalInput * character.MovementSpeed;
-            rotationSpeed = horizontalInput * character.RotationSpeed;
+            base.Enter();
+            horizontalInput = verticalInput = 0.0f;
         }
 
-        void Update()
+        public override void Exit()
         {
-            PlayerInputs();
-            character.Move(speed, rotationSpeed);
+            base.Exit();
+            character.ResetMoveParams();
+        }
+
+        public override void HandleInput()
+        {
+            base.HandleInput();
+            verticalInput = Input.GetAxis("Vertical");
+            horizontalInput = Input.GetAxis("Horizontal");
+        }
+
+        public override void PhysicsUpdate()
+        {
+            base.PhysicsUpdate();
+            character.Move(verticalInput * speed, horizontalInput * rotationSpeed);
         }
     }
 }
