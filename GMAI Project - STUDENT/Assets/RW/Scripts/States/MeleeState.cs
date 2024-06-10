@@ -53,7 +53,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             {
                 character.isHoldingWeapon = false;
                 character.SheathWeapon();
-                character.SetAnimationBool(character.isMelee, false);
+                //character.SetAnimationBool(character.isMelee, false);
                 stateMachine.ChangeState(character.standing);
             }
             else if (jump)
