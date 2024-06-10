@@ -23,7 +23,6 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             sheatheMelee = false;
             character.Equip(character.MeleeWeapon);
             character.isHoldingWeapon = true;
-            //character.TriggerDrawParam();
         }
 
         public override void HandleInput()
@@ -47,7 +46,6 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             {
                 character.isHoldingWeapon = false;
                 character.SheathWeapon();
-                //character.SetAnimationBool(character.isMelee, false);
                 stateMachine.ChangeState(character.standing);
             }
             else if (jump)
