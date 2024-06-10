@@ -29,6 +29,7 @@
  */
 
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace RayWenderlich.Unity.StatePatternInUnity
 {
@@ -44,5 +45,19 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         {
         }
 
+        public void PlayerInputs()
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
+
+            speed = verticalInput * character.MovementSpeed;
+            rotationSpeed = horizontalInput * character.RotationSpeed;
+        }
+
+        void Update()
+        {
+            PlayerInputs();
+            character.Move(speed, rotationSpeed);
+        }
     }
 }
