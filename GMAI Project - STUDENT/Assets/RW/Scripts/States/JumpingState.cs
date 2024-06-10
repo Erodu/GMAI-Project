@@ -64,7 +64,14 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             {
                 character.TriggerAnimation(landParam);
                 SoundManager.Instance.PlaySound(SoundManager.Instance.landing);
-                stateMachine.ChangeState(character.standing);
+                if (character.isHoldingWeapon)
+                {
+                    stateMachine.ChangeState(character.currentlyMelee);
+                }
+                else
+                {
+                    stateMachine.ChangeState(character.standing);
+                }
             }
         }
 

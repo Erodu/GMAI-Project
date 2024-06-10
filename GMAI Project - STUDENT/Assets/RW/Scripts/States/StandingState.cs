@@ -36,6 +36,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
     {
         private bool jump;
         private bool crouch;
+        private bool drawMelee;
 
         public StandingState(Character character, StateMachine stateMachine) : base(character, stateMachine)
         {
@@ -48,6 +49,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             rotationSpeed = character.RotationSpeed;
             crouch = false;
             jump = false;
+            drawMelee = false;
         }
 
         public override void HandleInput()
@@ -55,6 +57,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             base.HandleInput();
             crouch = Input.GetButtonDown("Fire3");
             jump = Input.GetButtonDown("Jump");
+            drawMelee = Input.GetButtonDown("Fire2");
         }
 
         public override void LogicUpdate()
@@ -67,6 +70,10 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             else if (jump)
             {
                 stateMachine.ChangeState(character.jumping);
+            }
+            else if (drawMelee)
+            {
+                stateMachine.ChangeState(character.currentlyMelee);
             }
         }
     }

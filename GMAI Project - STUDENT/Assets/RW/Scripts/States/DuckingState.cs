@@ -69,7 +69,14 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             base.LogicUpdate();
             if (!(crouchHeld || belowCeiling))
             {
-                stateMachine.ChangeState(character.standing);
+                if (character.isHoldingWeapon)
+                {
+                    stateMachine.ChangeState(character.currentlyMelee);
+                }
+                else
+                {
+                    stateMachine.ChangeState(character.standing);
+                }
             }
         }
 

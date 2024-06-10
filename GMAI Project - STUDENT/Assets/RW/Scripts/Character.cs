@@ -74,6 +74,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         public StandingState standing;
         public DuckingState ducking;
         public JumpingState jumping;
+        public MeleeState currentlyMelee;
         #endregion
 
         #region Properties
@@ -94,6 +95,9 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         public float MeleeRestThreshold => meleeRestThreshold;
         public int isMelee => Animator.StringToHash("IsMelee");
         public int crouchParam => Animator.StringToHash("Crouch");
+
+        public bool isHoldingWeapon;
+        public bool alreadyEquipped;
 
         public float ColliderSize
         {
@@ -225,8 +229,11 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             standing = new StandingState(this, movementSM);
             ducking = new DuckingState(this, movementSM);
             jumping = new JumpingState(this, movementSM);
+            currentlyMelee = new MeleeState(this, movementSM);
 
             movementSM.Initialize(standing);
+            isHoldingWeapon = false; // This makes sure that after jumping or crouching from the Melee State, that it doesn't go back to the Standing State.
+            alreadyEquipped = false; // This makes sure that the Melee State doesn't instantiate another weapon after jumping or crouching.
         }
 
         private void Update()
