@@ -17,24 +17,26 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         public override void Enter()
         {
             base.Enter();
+            character.SetAnimationBool(character.isMelee, true);
             speed = character.MovementSpeed;
             rotationSpeed = character.RotationSpeed;
             swingMelee = false;
             sheatheMelee = false;
-            if (!character.alreadyEquipped)
-            {
-                character.Equip(character.MeleeWeapon);
-                character.alreadyEquipped = true;
-            }
+            //if (!character.alreadyEquipped)
+            //{
+            //    character.Equip(character.MeleeWeapon);
+            //    character.alreadyEquipped = true;
+            //}
+            character.Equip(character.MeleeWeapon);
             character.isHoldingWeapon = true;
-            character.SetAnimationBool(character.isMelee, true);
+            //character.TriggerDrawParam();
         }
 
         public override void HandleInput()
         {
             base.HandleInput();
             swingMelee = Input.GetButtonDown("Fire1");
-            sheatheMelee = Input.GetButtonDown("Fire2");
+            sheatheMelee = Input.GetKeyDown(KeyCode.V);
 
             jump = Input.GetButtonDown("Jump");
             crouch = Input.GetButtonDown("Fire3");
@@ -50,8 +52,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             else if (sheatheMelee)
             {
                 character.isHoldingWeapon = false;
-                character.alreadyEquipped = false;
-                character.Unequip();
+                character.SheathWeapon();
                 character.SetAnimationBool(character.isMelee, false);
                 stateMachine.ChangeState(character.standing);
             }

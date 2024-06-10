@@ -69,6 +69,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         private int verticalMoveParam = Animator.StringToHash("V_Speed");
         private int shootParam = Animator.StringToHash("Shoot");
         private int swingParam = Animator.StringToHash("SwingMelee");
+        private int drawParam = Animator.StringToHash("DrawMelee");
+        private int sheatheParam = Animator.StringToHash("SheathMelee");
         private int hardLanding = Animator.StringToHash("HardLand");
 
         public StateMachine movementSM;
@@ -184,6 +186,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             {
                 ParentCurrentWeapon(handTransform);
             }
+            TriggerAnimation(drawParam);
         }
 
         public void DiveBomb()
@@ -193,9 +196,16 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             shockWave.Play();
         }
 
+        public void TriggerDrawParam()
+        {
+            TriggerAnimation(drawParam);
+        }
+
         public void SheathWeapon()
         {
             ParentCurrentWeapon(sheathTransform);
+            TriggerAnimation(sheatheParam);
+
         }
 
         public void Unequip()

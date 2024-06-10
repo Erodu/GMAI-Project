@@ -73,6 +73,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             }
             else if (drawMelee)
             {
+                character.SetAnimationBool(character.isMelee, true);
                 stateMachine.ChangeState(character.currentlyMelee);
             }
         }
