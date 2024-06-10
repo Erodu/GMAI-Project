@@ -100,7 +100,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         public int crouchParam => Animator.StringToHash("Crouch");
 
         public bool isHoldingWeapon;
-        public bool alreadyEquipped;
+        private bool weaponAlreadyInstantiated;
 
         public float ColliderSize
         {
@@ -178,7 +178,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
         public void Equip(GameObject weapon = null)
         {
-            if (weapon != null)
+            if (weapon != null && !weaponAlreadyInstantiated)
             {
                 currentWeapon = Instantiate(weapon, handTransform.position, handTransform.rotation, handTransform);
             }
@@ -186,6 +186,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             {
                 ParentCurrentWeapon(handTransform);
             }
+            weaponAlreadyInstantiated = true;
             TriggerAnimation(drawParam);
         }
 
@@ -194,11 +195,6 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             TriggerAnimation(hardLanding);
             SoundManager.Instance.PlaySound(SoundManager.Instance.hardLanding);
             shockWave.Play();
-        }
-
-        public void TriggerDrawParam()
-        {
-            TriggerAnimation(drawParam);
         }
 
         public void SheathWeapon()
@@ -248,8 +244,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             currentlyMelee = new MeleeState(this, movementSM);
 
             movementSM.Initialize(standing);
+            weaponAlreadyInstantiated = false;
             isHoldingWeapon = false; // This makes sure that after jumping or crouching from the Melee State, that it doesn't go back to the Standing State.
-            alreadyEquipped = false; // This makes sure that the Melee State doesn't instantiate another weapon after jumping or crouching.
         }
 
         private void Update()

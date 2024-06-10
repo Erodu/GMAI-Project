@@ -17,16 +17,10 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         public override void Enter()
         {
             base.Enter();
-            character.SetAnimationBool(character.isMelee, true);
             speed = character.MovementSpeed;
             rotationSpeed = character.RotationSpeed;
             swingMelee = false;
             sheatheMelee = false;
-            //if (!character.alreadyEquipped)
-            //{
-            //    character.Equip(character.MeleeWeapon);
-            //    character.alreadyEquipped = true;
-            //}
             character.Equip(character.MeleeWeapon);
             character.isHoldingWeapon = true;
             //character.TriggerDrawParam();
