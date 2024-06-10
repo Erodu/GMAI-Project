@@ -27,6 +27,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
                 character.alreadyEquipped = true;
             }
             character.isHoldingWeapon = true;
+            character.SetAnimationBool(character.isMelee, true);
         }
 
         public override void HandleInput()
@@ -44,7 +45,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             base.LogicUpdate();
             if (swingMelee)
             {
-                // Melee Stuff
+                character.Swing();
             }
             else if (sheatheMelee)
             {

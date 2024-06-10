@@ -68,6 +68,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         private int horizonalMoveParam = Animator.StringToHash("H_Speed");
         private int verticalMoveParam = Animator.StringToHash("V_Speed");
         private int shootParam = Animator.StringToHash("Shoot");
+        private int swingParam = Animator.StringToHash("SwingMelee");
         private int hardLanding = Animator.StringToHash("HardLand");
 
         public StateMachine movementSM;
@@ -161,6 +162,11 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             GameObject shootable = Instantiate(data.shootableObject, shootTransform.position, shootTransform.rotation);
             shootable.GetComponent<Rigidbody>().velocity = shootable.transform.forward * data.bulletInitialSpeed;
             SoundManager.Instance.PlaySound(SoundManager.Instance.shoot, true);
+        }
+
+        public void Swing()
+        {
+            TriggerAnimation(swingParam);
         }
 
         public bool CheckCollisionOverlap(Vector3 point)
