@@ -36,7 +36,8 @@ public class BoximonController : MonoBehaviour
     float pathChangeDelayTime = 5f;
     Transform ChosenRoam;
 
-    float proximity = 2f;
+    float proximity = 6f;
+    bool playerDetected;
 
     #endregion
 
@@ -70,7 +71,22 @@ public class BoximonController : MonoBehaviour
 
     #region Check Player Tree
 
-
+    [Task]
+    public void CheckForPlayerDetection()
+    {
+        if (playerDetected)
+        {
+            // Look towards player when detected.
+            Vector3 direction = (playerTransform.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            Task.current.Succeed();
+        }
+        else
+        {
+            Task.current.Fail();
+        }
+    }
 
     #endregion
 
@@ -79,6 +95,10 @@ public class BoximonController : MonoBehaviour
     void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
+
+        playerDetected = false;
+        attacked = false;
+        canMoveRandomly = true;
     }
 
     // Update is called once per frame
@@ -91,11 +111,23 @@ public class BoximonController : MonoBehaviour
             if (hitCollider.transform == playerTransform)
             {
                 navAgent.isStopped = true;
+                playerDetected = true;
             }
             else
             {
                 navAgent.isStopped = false;
+                playerDetected = false;
             }
+        }
+        CheckMovementAnim();
+    }
+
+    void CheckMovementAnim()
+    {
+        if (boximonAnim != null)
+        {
+            bool isMoving = navAgent.velocity.magnitude > 0.1f;
+            boximonAnim.SetBool("Run Forward", isMoving);
         }
     }
 

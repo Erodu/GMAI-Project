@@ -1,13 +1,14 @@
 tree("Root")
 	repeat
 		fallback
+			tree("CheckPlayer")
 			tree("Roaming")
 
 tree("Roaming")
 	RoamRandomly
 
 tree("CheckPlayer")
-	Succeed
+	CheckForPlayerDetection
 
 tree("Attack")
 	Succeed
