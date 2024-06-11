@@ -11,6 +11,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         private bool jump;
         private bool crouch;
 
+
         public MeleeState(Character character, StateMachine stateMachine) : base(character, stateMachine)
         {
         }
@@ -45,14 +46,6 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             {
                 character.Swing();
             }
-            else if (blockMelee)
-            {
-                character.Block();
-            }
-            else if (!blockMelee)
-            {
-                character.StopBlock();
-            }
             else if (sheatheMelee)
             {
                 character.isHoldingWeapon = false;
@@ -66,6 +59,14 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             else if (crouch)
             {
                 stateMachine.ChangeState(character.ducking);
+            }
+            else if (blockMelee)
+            {
+                character.Block();
+            }
+            else if (!blockMelee)
+            {
+                character.StopBlock();
             }
         }
     }
