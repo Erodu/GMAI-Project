@@ -16,10 +16,15 @@ public class BoximonController : MonoBehaviour
     [SerializeField]
     Transform[] RoamSpots;
 
+    [SerializeField]
+    Transform playerTransform;
+
     NavMeshAgent navAgent;
 
     [SerializeField]
     PandaBehaviour panda;
+
+    Collider[] hitColliders;
 
     #endregion
 
@@ -30,6 +35,8 @@ public class BoximonController : MonoBehaviour
     float newPathTime;
     float pathChangeDelayTime = 5f;
     Transform ChosenRoam;
+
+    float proximity = 2f;
 
     #endregion
 
@@ -77,7 +84,19 @@ public class BoximonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        hitColliders = Physics.OverlapSphere(transform.position, proximity);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.transform == playerTransform)
+            {
+                navAgent.isStopped = true;
+            }
+            else
+            {
+                navAgent.isStopped = false;
+            }
+        }
     }
 
     #endregion
