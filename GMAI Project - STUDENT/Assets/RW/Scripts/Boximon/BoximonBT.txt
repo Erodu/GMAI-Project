@@ -1,2 +1,16 @@
 tree("Root")
+	repeat
+		fallback
+			tree("Roaming")
+
+tree("Roaming")
+	RoamRandomly
+
+tree("CheckPlayer")
+	Succeed
+
+tree("Attack")
+	Succeed
+
+tree("Death")
 	Succeed
