@@ -593,6 +593,8 @@ MonoBehaviour:
   - {fileID: 2133087256}
   - {fileID: 1119107470}
   - {fileID: 1106961598}
+  playerTransform: {fileID: 1252697823}
+  panda: {fileID: 107456735}
 --- !u!195 &107456737
 NavMeshAgent:
   m_ObjectHideFlags: 0
