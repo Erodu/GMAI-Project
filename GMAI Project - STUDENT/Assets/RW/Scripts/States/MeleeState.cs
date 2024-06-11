@@ -6,6 +6,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
     {
         private bool swingMelee;
         private bool sheatheMelee;
+        private bool blockMelee;
 
         private bool jump;
         private bool crouch;
@@ -21,6 +22,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             rotationSpeed = character.RotationSpeed;
             swingMelee = false;
             sheatheMelee = false;
+            blockMelee = false;
             character.Equip(character.MeleeWeapon);
             character.isHoldingWeapon = true;
         }
@@ -30,6 +32,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             base.HandleInput();
             swingMelee = Input.GetButtonDown("Fire1");
             sheatheMelee = Input.GetKeyDown(KeyCode.V);
+            blockMelee = Input.GetKey(KeyCode.F);
 
             jump = Input.GetButtonDown("Jump");
             crouch = Input.GetButtonDown("Fire3");
@@ -41,6 +44,14 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             if (swingMelee)
             {
                 character.Swing();
+            }
+            else if (blockMelee)
+            {
+                character.Block();
+            }
+            else if (!blockMelee)
+            {
+                character.StopBlock();
             }
             else if (sheatheMelee)
             {

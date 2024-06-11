@@ -71,6 +71,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         private int swingParam = Animator.StringToHash("SwingMelee");
         private int drawParam = Animator.StringToHash("DrawMelee");
         private int sheatheParam = Animator.StringToHash("SheathMelee");
+        private int blockParam = Animator.StringToHash("BlockMelee");
         private int hardLanding = Animator.StringToHash("HardLand");
 
         public StateMachine movementSM;
@@ -230,6 +231,16 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             currentWeapon.transform.SetParent(parent);
             currentWeapon.transform.localPosition = Vector3.zero;
             currentWeapon.transform.localRotation = Quaternion.identity;
+        }
+
+        public void Block()
+        {
+            SetAnimationBool(blockParam, true);
+        }
+
+        public void StopBlock()
+        {
+            SetAnimationBool(blockParam, false);
         }
         #endregion
 
