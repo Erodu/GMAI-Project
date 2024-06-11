@@ -10,6 +10,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
         private bool jump;
         private bool crouch;
+        private bool roll;
 
 
         public MeleeState(Character character, StateMachine stateMachine) : base(character, stateMachine)
@@ -37,6 +38,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 
             jump = Input.GetButtonDown("Jump");
             crouch = Input.GetButtonDown("Fire3");
+            roll = Input.GetKeyDown(KeyCode.Q);
         }
 
         public override void LogicUpdate()
@@ -59,6 +61,10 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             else if (crouch)
             {
                 stateMachine.ChangeState(character.ducking);
+            }
+            else if (roll)
+            {
+                stateMachine.ChangeState(character.rolling);
             }
             else if (blockMelee)
             {

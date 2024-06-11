@@ -36,6 +36,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
     {
         private bool jump;
         private bool crouch;
+        private bool roll;
         private bool drawMelee;
 
         public StandingState(Character character, StateMachine stateMachine) : base(character, stateMachine)
@@ -57,6 +58,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             base.HandleInput();
             crouch = Input.GetButtonDown("Fire3");
             jump = Input.GetButtonDown("Jump");
+            roll = Input.GetKeyDown(KeyCode.Q);
             drawMelee = Input.GetButtonDown("Fire2");
         }
 
@@ -70,6 +72,10 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             else if (jump)
             {
                 stateMachine.ChangeState(character.jumping);
+            }
+            else if (roll)
+            {
+                stateMachine.ChangeState(character.rolling);
             }
             else if (drawMelee)
             {

@@ -79,6 +79,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         public DuckingState ducking;
         public JumpingState jumping;
         public MeleeState currentlyMelee;
+        public RollingState rolling;
         #endregion
 
         #region Properties
@@ -242,6 +243,12 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         {
             SetAnimationBool(blockParam, false);
         }
+
+        public bool DetectedAnimEnd(int animParam)
+        {
+            AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+            return stateInfo.shortNameHash == animParam && stateInfo.normalizedTime >= 0.5f;
+        }
         #endregion
 
         #region MonoBehaviour Callbacks
@@ -254,6 +261,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             ducking = new DuckingState(this, movementSM);
             jumping = new JumpingState(this, movementSM);
             currentlyMelee = new MeleeState(this, movementSM);
+            rolling = new RollingState(this, movementSM);
 
             movementSM.Initialize(standing);
             weaponAlreadyInstantiated = false;
