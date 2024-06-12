@@ -88,6 +88,26 @@ public class BoximonController : MonoBehaviour
         }
     }
 
+    [Task]
+    public void CheckPlayerAttack()
+    {
+        if (attacked)
+        {
+            attacked = false;
+            Task.current.Succeed();
+        }
+        else
+        {
+            Task.current.Fail();
+        }
+    }
+
+    public void AttackedByPlayer() // This function is to be called in HitBox.cs.
+    {
+        attacked = true;
+        //Debug.Log("You hit me!");
+    }
+
     #endregion
 
     #region MonoBehaviour Callbacks

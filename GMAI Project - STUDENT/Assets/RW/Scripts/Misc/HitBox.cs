@@ -36,6 +36,16 @@ namespace RayWenderlich.Unity.StatePatternInUnity
     {
         public float damage;
 
-        //Do damage
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Boximon"))
+            {
+                BoximonController boximon = other.GetComponent<BoximonController>();
+                if (boximon != null)
+                {
+                    boximon.AttackedByPlayer();
+                }
+            }
+        }
     }
 }

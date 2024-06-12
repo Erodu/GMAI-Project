@@ -8,7 +8,9 @@ tree("Roaming")
 	RoamRandomly
 
 tree("CheckPlayer")
-	CheckForPlayerDetection
+	sequence
+		CheckForPlayerDetection
+		CheckPlayerAttack
 
 tree("Attack")
 	Succeed

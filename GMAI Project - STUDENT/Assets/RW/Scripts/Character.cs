@@ -28,6 +28,7 @@
  * THE SOFTWARE.
  */
 
+using System.Collections;
 using UnityEngine;
 
 namespace RayWenderlich.Unity.StatePatternInUnity
@@ -171,6 +172,14 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         public void Swing()
         {
             TriggerAnimation(swingParam);
+            ActivateHitBox();
+            StartCoroutine(DelayHitBoxDeactivation());
+        }
+
+        IEnumerator DelayHitBoxDeactivation()
+        {
+            yield return new WaitForSeconds(0.25f);
+            DeactivateHitBox();
         }
 
         public bool CheckCollisionOverlap(Vector3 point)
