@@ -74,6 +74,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
         private int sheatheParam = Animator.StringToHash("SheathMelee");
         private int blockParam = Animator.StringToHash("BlockMelee");
         private int hardLanding = Animator.StringToHash("HardLand");
+        private int hurtParam = Animator.StringToHash("Hurt");
 
         public StateMachine movementSM;
         public StandingState standing;
@@ -258,6 +259,12 @@ namespace RayWenderlich.Unity.StatePatternInUnity
             AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
             return stateInfo.shortNameHash == animParam && stateInfo.normalizedTime >= 0.5f;
         }
+
+        public void PlayHurtAnim()
+        {
+            TriggerAnimation(hurtParam);
+        }
+
         #endregion
 
         #region MonoBehaviour Callbacks
