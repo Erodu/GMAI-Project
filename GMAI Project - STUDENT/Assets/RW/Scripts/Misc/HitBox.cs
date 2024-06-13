@@ -34,7 +34,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 {
     public class HitBox : MonoBehaviour
     {
-        public float damage;
+        public int damage;
 
         private void OnTriggerEnter(Collider other)
         {

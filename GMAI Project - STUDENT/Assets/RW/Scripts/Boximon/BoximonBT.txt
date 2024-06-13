@@ -1,6 +1,7 @@
 tree("Root")
 	repeat
 		fallback
+			tree("CheckDeath")
 			tree("Attack")
 			tree("CheckPlayer")
 			tree("Roaming")
@@ -18,5 +19,7 @@ tree("Attack")
 		ChasePlayer
 		AttackPlayer
 
-tree("Death")
-	Succeed
+tree("CheckDeath")
+	sequence
+		CheckHealthState
+		Death

@@ -33,6 +33,8 @@ public class BoximonController : MonoBehaviour
 
     #region Properties
 
+    public int hitPoints = 15;
+
     bool attacked;
     bool canMoveRandomly;
     float newPathTime;
@@ -43,7 +45,6 @@ public class BoximonController : MonoBehaviour
     bool playerDetected;
 
     float attackRange = 1.5f;
-    bool isChasing;
     float distanceToPlayer;
 
     #endregion
@@ -147,6 +148,7 @@ public class BoximonController : MonoBehaviour
     [Task]
     public void AttackPlayer()
     {
+        distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
         if (distanceToPlayer <= attackRange)
         {
             Debug.Log("Attacking");
@@ -161,7 +163,7 @@ public class BoximonController : MonoBehaviour
 
     void Attack()
     {
-        boximonAnim.SetTrigger("Attack 02");
+        boximonAnim.SetTrigger("Attack 01");
         hitBox.enabled = true;
         StartCoroutine(DelayHitBoxDeactivation());
     }
@@ -169,8 +171,38 @@ public class BoximonController : MonoBehaviour
     IEnumerator DelayHitBoxDeactivation()
     {
         yield return new WaitForSeconds(0.25f);
-        boximonAnim.ResetTrigger("Attack 02");
         hitBox.enabled = false;
+    }
+
+    #endregion
+
+    #region Check Death Tree
+
+    [Task]
+    public void CheckHealthState()
+    {
+        if (hitPoints <= 0)
+        {
+            Task.current.Succeed();
+        }
+        else
+        {
+            Task.current.Fail();
+        }
+    }
+
+    [Task]
+    public void Death()
+    {
+        boximonAnim.SetTrigger("Die");
+        navAgent.isStopped = true;
+        StartCoroutine(DelayDespawn());
+    }
+
+    IEnumerator DelayDespawn()
+    {
+        yield return new WaitForSeconds(5);
+        this.gameObject.SetActive(false);
     }
 
     #endregion
@@ -184,12 +216,12 @@ public class BoximonController : MonoBehaviour
         playerDetected = false;
         attacked = false;
         canMoveRandomly = true;
-        isChasing = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Hit Points: " + hitPoints.ToString());
         distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
         hitColliders = Physics.OverlapSphere(transform.position, proximity);
 
