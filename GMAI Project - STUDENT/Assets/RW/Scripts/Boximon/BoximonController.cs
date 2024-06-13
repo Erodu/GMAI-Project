@@ -195,7 +195,7 @@ public class BoximonController : MonoBehaviour
 
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.transform == playerTransform)
+            if (hitCollider.transform == playerTransform && !attacked)
             {
                 navAgent.isStopped = true;
                 playerDetected = true;
