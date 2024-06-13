@@ -39,6 +39,10 @@ public class BoximonController : MonoBehaviour
     float proximity = 6f;
     bool playerDetected;
 
+    float attackRange = 2f;
+    bool isChasing;
+    float distanceToPlayer;
+
     #endregion
 
     #region Roaming/Idle Tree
@@ -94,6 +98,7 @@ public class BoximonController : MonoBehaviour
         if (attacked)
         {
             attacked = false;
+            canMoveRandomly = false;
             Task.current.Succeed();
         }
         else
@@ -112,6 +117,28 @@ public class BoximonController : MonoBehaviour
 
     #region Attacking Tree
 
+    [Task]
+    public void ChasePlayer()
+    {
+        if (playerTransform != null)
+        {
+            distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+            if (distanceToPlayer > attackRange)
+            {
+                navAgent.SetDestination(playerTransform.position);
+                Task.current.Succeed();
+            }
+            else
+            {
+                Task.current.Fail();
+            }
+        }
+        else
+        {
+            Task.current.Fail();
+        }
+    }
+
     #endregion
 
     #region MonoBehaviour Callbacks
@@ -123,6 +150,7 @@ public class BoximonController : MonoBehaviour
         playerDetected = false;
         attacked = false;
         canMoveRandomly = true;
+        isChasing = false;
     }
 
     // Update is called once per frame

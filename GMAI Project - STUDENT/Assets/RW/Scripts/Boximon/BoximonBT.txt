@@ -13,7 +13,8 @@ tree("CheckPlayer")
 		CheckPlayerAttack
 
 tree("Attack")
-	Succeed
+	repeat
+		ChasePlayer
 
 tree("Death")
 	Succeed
