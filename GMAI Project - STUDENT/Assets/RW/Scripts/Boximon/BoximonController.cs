@@ -39,7 +39,7 @@ public class BoximonController : MonoBehaviour
     float proximity = 6f;
     bool playerDetected;
 
-    float attackRange = 2f;
+    float attackRange = 0.001f;
     bool isChasing;
     float distanceToPlayer;
 
@@ -97,7 +97,6 @@ public class BoximonController : MonoBehaviour
     {
         if (attacked)
         {
-            attacked = false;
             canMoveRandomly = false;
             Task.current.Succeed();
         }
@@ -120,7 +119,7 @@ public class BoximonController : MonoBehaviour
     [Task]
     public void ChasePlayer()
     {
-        if (playerTransform != null)
+        if (playerTransform != null && attacked)
         {
             distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
             if (distanceToPlayer > attackRange)
