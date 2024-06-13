@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.AI;
 using Panda;
 using UnityEngine.AI;
+using JetBrains.Annotations;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class BoximonController : MonoBehaviour
@@ -33,7 +34,7 @@ public class BoximonController : MonoBehaviour
 
     #region Properties
 
-    public int hitPoints = 15;
+    public float hitPoints = 15;
 
     bool attacked;
     bool canMoveRandomly;
@@ -110,10 +111,11 @@ public class BoximonController : MonoBehaviour
         }
     }
 
-    public void AttackedByPlayer() // This function is to be called in HitBox.cs.
+    public void AttackedByPlayer(float damage) // This function is to be called in HitBox.cs.
     {
+        hitPoints -= damage;
         attacked = true;
-        //Debug.Log("You hit me!");
+        //Debug.Log($"You hit me! HP Left: {hitPoints}");
     }
 
     #endregion
@@ -191,6 +193,11 @@ public class BoximonController : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float damage)
+    {
+        hitPoints -= damage;
+    }
+
     [Task]
     public void Death()
     {
@@ -221,7 +228,6 @@ public class BoximonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Hit Points: " + hitPoints.ToString());
         distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
         hitColliders = Physics.OverlapSphere(transform.position, proximity);
 

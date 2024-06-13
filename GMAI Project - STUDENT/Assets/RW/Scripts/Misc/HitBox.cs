@@ -34,7 +34,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
 {
     public class HitBox : MonoBehaviour
     {
-        public int damage;
+        public float damage;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -43,7 +43,8 @@ namespace RayWenderlich.Unity.StatePatternInUnity
                 BoximonController boximon = other.GetComponent<BoximonController>();
                 if (boximon != null)
                 {
-                    boximon.AttackedByPlayer();
+                    boximon.AttackedByPlayer(damage);
+                    //boximon.TakeDamage(damage);
                 }
             }
         }
