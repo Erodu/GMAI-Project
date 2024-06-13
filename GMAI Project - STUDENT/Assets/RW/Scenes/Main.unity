@@ -616,8 +616,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.14, y: 1.15, z: 1}
-  m_Center: {x: 0, y: 0.57, z: 0}
+  m_Size: {x: 0.7483568, y: 1.15, z: 0.70042133}
+  m_Center: {x: 0.00027418137, y: 0.57, z: -0.0016379356}
 --- !u!114 &107456735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,6 +662,7 @@ MonoBehaviour:
   - {fileID: 1106961598}
   playerTransform: {fileID: 1252697823}
   panda: {fileID: 107456735}
+  hitBox: {fileID: 76200468}
 --- !u!195 &107456737
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -680,7 +681,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -4602,7 +4603,7 @@ GameObject:
   - component: {fileID: 1252697825}
   m_Layer: 13
   m_Name: Character
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

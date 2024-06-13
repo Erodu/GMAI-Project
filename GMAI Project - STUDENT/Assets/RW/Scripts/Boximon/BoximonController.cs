@@ -26,6 +26,9 @@ public class BoximonController : MonoBehaviour
 
     Collider[] hitColliders;
 
+    [SerializeField]
+    BoxCollider hitBox;
+
     #endregion
 
     #region Properties
@@ -39,7 +42,7 @@ public class BoximonController : MonoBehaviour
     float proximity = 6f;
     bool playerDetected;
 
-    float attackRange = 0.001f;
+    float attackRange = 1.5f;
     bool isChasing;
     float distanceToPlayer;
 
@@ -121,14 +124,17 @@ public class BoximonController : MonoBehaviour
     {
         if (playerTransform != null && attacked)
         {
-            distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+            navAgent.stoppingDistance = attackRange;
+            //Debug.Log($"Distance to Player: {distanceToPlayer}, Attack Range: {attackRange}");
             if (distanceToPlayer > attackRange)
             {
+                navAgent.isStopped = false;
                 navAgent.SetDestination(playerTransform.position);
                 Task.current.Succeed();
             }
             else
             {
+                navAgent.isStopped = true;
                 Task.current.Fail();
             }
         }
@@ -136,6 +142,35 @@ public class BoximonController : MonoBehaviour
         {
             Task.current.Fail();
         }
+    }
+
+    [Task]
+    public void AttackPlayer()
+    {
+        if (distanceToPlayer <= attackRange)
+        {
+            Debug.Log("Attacking");
+            Attack();
+            Task.current.Succeed();
+        }
+        else
+        {
+            Task.current.Fail();
+        }
+    }
+
+    void Attack()
+    {
+        boximonAnim.SetTrigger("Attack 02");
+        hitBox.enabled = true;
+        StartCoroutine(DelayHitBoxDeactivation());
+    }
+
+    IEnumerator DelayHitBoxDeactivation()
+    {
+        yield return new WaitForSeconds(0.25f);
+        boximonAnim.ResetTrigger("Attack 02");
+        hitBox.enabled = false;
     }
 
     #endregion
@@ -155,6 +190,7 @@ public class BoximonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
         hitColliders = Physics.OverlapSphere(transform.position, proximity);
 
         foreach (var hitCollider in hitColliders)
