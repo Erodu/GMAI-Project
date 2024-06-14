@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PaladinIdle : PaladinStates
 {
+    float newPathTime;
+    float pathChangeDelayTime = 5f;
     public PaladinIdle(Paladin m_Paladin)
     {
         paladin = m_Paladin;
@@ -11,16 +13,32 @@ public class PaladinIdle : PaladinStates
 
     public override void Enter()
     {
-        throw new System.NotImplementedException();
+        paladin.roaming = true;
     }
 
     public override void Execute()
     {
-        throw new System.NotImplementedException();
+        Roam();
     }
 
     public override void Exit()
     {
         throw new System.NotImplementedException();
+    }
+
+    void Roam()
+    {
+        if (paladin.roaming && paladin.paladinAnim != null)
+        {
+            if (Time.time - newPathTime >= pathChangeDelayTime)
+            {
+                if (!paladin.paladinAgent.pathPending && !paladin.paladinAgent.hasPath)
+                {
+                    Vector3 chosenPos = paladin.GetRandomRoamLocation();
+                    paladin.paladinAgent.SetDestination(chosenPos);
+                    newPathTime = Time.time;
+                }
+            }
+        }
     }
 }
