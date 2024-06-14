@@ -11,11 +11,9 @@ public class Paladin : MonoBehaviour
     [HideInInspector]
     public NavMeshAgent paladinAgent;
 
-    [HideInInspector]
     public Animator paladinAnim;
 
-    [SerializeField]
-    Transform playerTransform;
+    public Transform playerTransform;
 
     #endregion
 
@@ -31,6 +29,11 @@ public class Paladin : MonoBehaviour
 
     public BoxCollider detectionZone;
 
+    [HideInInspector]
+    public bool HitByPlayer;
+
+    public BoxCollider paladinHitBox;
+
     #endregion
 
     #region States
@@ -41,7 +44,7 @@ public class Paladin : MonoBehaviour
 
     #endregion
 
-    #region Methods
+    #region Methods & Coroutines
 
     public void ChangePaladinState(PaladinStates nextState)
     {

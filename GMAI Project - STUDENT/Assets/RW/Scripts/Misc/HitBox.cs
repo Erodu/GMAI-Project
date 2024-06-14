@@ -47,6 +47,14 @@ namespace RayWenderlich.Unity.StatePatternInUnity
                     //boximon.TakeDamage(damage);
                 }
             }
+            else if (other.CompareTag("Paladin"))
+            {
+                Paladin paladin = other.GetComponent<Paladin>();
+                if (paladin != null)
+                {
+
+                }
+            }
         }
     }
 }
