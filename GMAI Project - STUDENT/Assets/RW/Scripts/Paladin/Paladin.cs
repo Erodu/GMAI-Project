@@ -26,6 +26,11 @@ public class Paladin : MonoBehaviour
     [HideInInspector]
     public bool roaming;
 
+    [HideInInspector]
+    public bool playerDetected;
+
+    public BoxCollider detectionZone;
+
     #endregion
 
     #region States
@@ -38,6 +43,16 @@ public class Paladin : MonoBehaviour
 
     #region Methods
 
+    public void ChangePaladinState(PaladinStates nextState)
+    {
+        if (m_Current != null)
+        {
+            m_Current.Exit();
+        }
+
+        m_Current = nextState;
+        m_Current.Enter();
+    }
     public Vector3 GetRandomRoamLocation() // Get a random location to roam to within a sphere.
     {
         Vector3 randomDir = Random.insideUnitSphere * movementRadius;
@@ -62,6 +77,7 @@ public class Paladin : MonoBehaviour
         m_Idle = new PaladinIdle(this);
         m_Current = m_Idle;
         m_Current.Enter();
+        playerDetected = false;
     }
 
     // Update is called once per frame

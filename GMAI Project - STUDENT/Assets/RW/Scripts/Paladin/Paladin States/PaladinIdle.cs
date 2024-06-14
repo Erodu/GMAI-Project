@@ -19,11 +19,15 @@ public class PaladinIdle : PaladinStates
     public override void Execute()
     {
         Roam();
+        if (paladin.playerDetected)
+        {
+            // Transition to Attack State
+        }
     }
 
     public override void Exit()
     {
-        throw new System.NotImplementedException();
+        paladin.roaming = false;
     }
 
     void Roam()
