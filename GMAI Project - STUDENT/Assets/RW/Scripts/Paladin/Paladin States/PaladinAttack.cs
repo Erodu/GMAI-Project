@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PaladinAttack : PaladinStates
 {
-    float attackRange = 1.5f;
+    float attackRange = 2.3f;
     float distanceToPlayer;
     public PaladinAttack(Paladin m_Paladin)
     {
@@ -13,6 +13,7 @@ public class PaladinAttack : PaladinStates
 
     public override void Enter()
     {
+        paladin.paladinAgent.stoppingDistance = attackRange;
         paladin.HitByPlayer = false;
     }
 
@@ -48,7 +49,6 @@ public class PaladinAttack : PaladinStates
     void Attack()
     {
         paladin.StartCoroutine(PunchDelay());
-        Punch();
     }
 
     void Punch()
@@ -62,6 +62,7 @@ public class PaladinAttack : PaladinStates
     IEnumerator PunchDelay()
     {
         yield return new WaitForSeconds(5f);
+        Punch();
     }
 
     IEnumerator PaladinHitBoxDeactivationDelay()

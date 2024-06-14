@@ -97,7 +97,7 @@ public class Paladin : MonoBehaviour
     {
         if (paladinAnim != null)
         {
-            bool isMoving = paladinAgent.velocity.magnitude > 0.1f;
+            bool isMoving = paladinAgent.velocity.magnitude > 1f;
             paladinAnim.SetBool("Running", isMoving);
         }
     }
@@ -125,11 +125,6 @@ public class Paladin : MonoBehaviour
             paladinAnim.SetTrigger("Die");
             StartCoroutine(DeathDelay());
         }
-    }
-
-    void Die()
-    {
-
     }
 
     IEnumerator DeathDelay()
