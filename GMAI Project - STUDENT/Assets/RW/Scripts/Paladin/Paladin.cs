@@ -15,6 +15,8 @@ public class Paladin : MonoBehaviour
 
     public Transform playerTransform;
 
+    public BoxCollider paladinHitBox;
+
     #endregion
 
     #region Properties
@@ -27,18 +29,22 @@ public class Paladin : MonoBehaviour
     [HideInInspector]
     public bool playerDetected;
 
-    public BoxCollider detectionZone;
+    float detectionProximity = 12f;
+
+    Collider[] hitColliders;
 
     [HideInInspector]
     public bool HitByPlayer;
 
-    public BoxCollider paladinHitBox;
+    public float hitPoints = 15f;
 
     #endregion
 
     #region States
 
     public PaladinStates m_Idle { get; set; } = null;
+
+    public PaladinStates m_Attack { get; set; } = null;
 
     public PaladinStates m_Current { get; set; } = null;
 
@@ -69,6 +75,69 @@ public class Paladin : MonoBehaviour
         return finalPos;
     }
 
+    void FindPlayer()
+    {
+        hitColliders = Physics.OverlapSphere(transform.position, detectionProximity);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.transform == playerTransform)
+            {
+                playerDetected = true;
+                break;
+            }
+            else
+            {
+                playerDetected = false;
+            }
+        }
+    }
+
+    void CheckMovementAnim()
+    {
+        if (paladinAnim != null)
+        {
+            bool isMoving = paladinAgent.velocity.magnitude > 0.1f;
+            paladinAnim.SetBool("Running", isMoving);
+        }
+    }
+
+    public void TakeHit(float damage)
+    {
+        int guardCheck = Random.Range(0, 10);
+        if (guardCheck <= 3) // Successful guard
+        {
+            paladinAnim.SetTrigger("Block");
+            Debug.Log("The paladin guards!");
+        }
+        else
+        {
+            paladinAnim.SetTrigger("Hit");
+            hitPoints -= damage;
+        }
+    }
+
+    void CheckDeath()
+    {
+        if (hitPoints <= 0)
+        {
+            paladinAgent.isStopped = true;
+            paladinAnim.SetTrigger("Die");
+            StartCoroutine(DeathDelay());
+        }
+    }
+
+    void Die()
+    {
+
+    }
+
+    IEnumerator DeathDelay()
+    {
+        yield return new WaitForSeconds(5f);
+        this.gameObject.SetActive(false);
+    }
+
     #endregion
 
     #region MonoBehaviour Callbacks
@@ -88,16 +157,9 @@ public class Paladin : MonoBehaviour
     {
         m_Current.Execute();
 
+        FindPlayer();
         CheckMovementAnim();
-    }
-
-    void CheckMovementAnim()
-    {
-        if (paladinAnim != null)
-        {
-            bool isMoving = paladinAgent.velocity.magnitude > 0.1f;
-            paladinAnim.SetBool("Running", isMoving);
-        }
+        CheckDeath();
     }
 
     #endregion

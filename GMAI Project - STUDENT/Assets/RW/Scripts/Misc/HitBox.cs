@@ -52,7 +52,7 @@ namespace RayWenderlich.Unity.StatePatternInUnity
                 Paladin paladin = other.GetComponent<Paladin>();
                 if (paladin != null)
                 {
-
+                    paladin.TakeHit(damage);
                 }
             }
         }

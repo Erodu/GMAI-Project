@@ -21,7 +21,7 @@ public class PaladinIdle : PaladinStates
         Roam();
         if (paladin.playerDetected)
         {
-            // Transition to Attack State
+            paladin.ChangePaladinState(new PaladinAttack(paladin));
         }
     }
 

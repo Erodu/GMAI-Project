@@ -13,19 +13,19 @@ public class PaladinAttack : PaladinStates
 
     public override void Enter()
     {
-        paladin.paladinAgent.stoppingDistance = attackRange;
         paladin.HitByPlayer = false;
     }
 
     public override void Execute()
     {
         distanceToPlayer = Vector3.Distance(paladin.transform.position, paladin.playerTransform.position);
+        Debug.Log($"DistanceToPlayer: {distanceToPlayer}, AttackRange: {attackRange}");
         Chase();
     }
 
     public override void Exit()
     {
-        throw new System.NotImplementedException();
+        // Nothing yet
     }
 
     void Chase()
@@ -40,36 +40,33 @@ public class PaladinAttack : PaladinStates
             else
             {
                 paladin.paladinAgent.isStopped = true;
+                Attack();
             }
         }
     }
 
     void Attack()
     {
-        if (distanceToPlayer <= attackRange)
-        {
-            paladin.StartCoroutine(PunchDelay());
-            Punch();
-        }
+        paladin.StartCoroutine(PunchDelay());
+        Punch();
     }
 
     void Punch()
     {
         paladin.paladinAnim.SetTrigger("Punch");
-    }
-
-    void BlockHit()
-    {
-        paladin.paladinAnim.SetTrigger("Block");
-    }
-
-    void TakeHit()
-    {
-        paladin.paladinAnim.SetTrigger("Hit");
+        paladin.paladinHitBox.enabled = true;
+        paladin.StartCoroutine(PaladinHitBoxDeactivationDelay());
+        
     }
 
     IEnumerator PunchDelay()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(5f);
+    }
+
+    IEnumerator PaladinHitBoxDeactivationDelay()
+    {
+        yield return new WaitForSeconds(0.25f);
+        paladin.paladinHitBox.enabled = false;
     }
 }
