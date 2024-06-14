@@ -14,8 +14,8 @@ public class BoximonController : MonoBehaviour
     [SerializeField]
     Animator boximonAnim;
 
-    [SerializeField]
-    Transform[] RoamSpots;
+    //[SerializeField]
+    //Transform[] RoamSpots;
 
     [SerializeField]
     Transform playerTransform;
@@ -41,6 +41,7 @@ public class BoximonController : MonoBehaviour
     float newPathTime;
     float pathChangeDelayTime = 5f;
     Transform ChosenRoam;
+    float roamRadius = 8f;
 
     float proximity = 6f;
     bool playerDetected;
@@ -55,15 +56,14 @@ public class BoximonController : MonoBehaviour
     [Task]
     public void RoamRandomly()
     {
-        if (boximonAnim != null && RoamSpots.Length > 0)
+        if (boximonAnim != null)
         {
             if (Time.time - newPathTime >= pathChangeDelayTime && canMoveRandomly)
             {
                 if (!navAgent.pathPending && !navAgent.hasPath)
                 {
-                    ChosenRoam = RoamSpots[Random.Range(0, RoamSpots.Length)];
-
-                    navAgent.SetDestination(ChosenRoam.position);
+                    Vector3 chosenPos = GetRandomRoamSpot();
+                    navAgent.SetDestination(chosenPos);
                     newPathTime = Time.time;
                 }
             }
@@ -74,6 +74,19 @@ public class BoximonController : MonoBehaviour
             Task.current.Fail();
         }
         Task.current.Succeed();
+    }
+
+    Vector3 GetRandomRoamSpot()
+    {
+        Vector3 randomDir = Random.insideUnitSphere * roamRadius;
+        randomDir += transform.position;
+        NavMeshHit hit;
+        Vector3 finalPos = Vector3.zero;
+        if (NavMesh.SamplePosition(randomDir, out hit, roamRadius, 1))
+        {
+            finalPos = hit.position;
+        }
+        return finalPos;
     }
 
     #endregion
@@ -153,7 +166,6 @@ public class BoximonController : MonoBehaviour
         distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
         if (distanceToPlayer <= attackRange)
         {
-            Debug.Log("Attacking");
             Attack();
             Task.current.Succeed();
         }
