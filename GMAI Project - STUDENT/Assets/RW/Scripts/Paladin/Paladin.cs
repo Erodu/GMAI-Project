@@ -17,6 +17,8 @@ public class Paladin : MonoBehaviour
 
     public BoxCollider paladinHitBox;
 
+    public BoximonController boximon;
+
     #endregion
 
     #region Properties

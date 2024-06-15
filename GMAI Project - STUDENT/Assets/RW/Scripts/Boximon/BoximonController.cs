@@ -49,6 +49,9 @@ public class BoximonController : MonoBehaviour
     float attackRange = 1.5f;
     float distanceToPlayer;
 
+    [HideInInspector]
+    public bool isDead;
+
     #endregion
 
     #region Roaming/Idle Tree
@@ -215,6 +218,7 @@ public class BoximonController : MonoBehaviour
     {
         boximonAnim.SetTrigger("Die");
         navAgent.isStopped = true;
+        isDead = true;
         StartCoroutine(DelayDespawn());
     }
 
@@ -235,6 +239,7 @@ public class BoximonController : MonoBehaviour
         playerDetected = false;
         attacked = false;
         canMoveRandomly = true;
+        isDead = false;
     }
 
     // Update is called once per frame

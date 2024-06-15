@@ -651,6 +651,7 @@ MonoBehaviour:
   panda: {fileID: 107456735}
   hitBox: {fileID: 76200468}
   hitPoints: 15
+  isDead: 0
 --- !u!195 &107456737
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6119,6 +6120,7 @@ MonoBehaviour:
   paladinAnim: {fileID: 1535093810}
   playerTransform: {fileID: 1252697823}
   paladinHitBox: {fileID: 1651932616}
+  boximon: {fileID: 107456736}
   movementRadius: 10
   roaming: 0
   playerDetected: 0
