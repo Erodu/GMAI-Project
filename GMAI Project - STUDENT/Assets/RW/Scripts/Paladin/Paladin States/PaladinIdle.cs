@@ -21,6 +21,7 @@ public class PaladinIdle : PaladinStates
         Roam();
         if (paladin.boximon.isDead)
         {
+            Debug.Log("The paladin's wrath has been summoned...");
             paladin.ChangePaladinState(new PaladinAttack(paladin));
         }
     }
