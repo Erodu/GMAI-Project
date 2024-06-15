@@ -23,6 +23,10 @@ public class PaladinAttack : PaladinStates
         distanceToPlayer = Vector3.Distance(paladin.transform.position, paladin.playerTransform.position);
         //Debug.Log($"DistanceToPlayer: {distanceToPlayer}, AttackRange: {attackRange}");
         Chase();
+        if (paladin.CheckDeath())
+        {
+            paladin.ChangePaladinState(new PaladinDeath(paladin));
+        }
     }
 
     public override void Exit()

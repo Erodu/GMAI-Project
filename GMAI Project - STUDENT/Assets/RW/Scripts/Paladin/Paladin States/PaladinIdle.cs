@@ -24,6 +24,10 @@ public class PaladinIdle : PaladinStates
             Debug.Log("The paladin's wrath has been summoned...");
             paladin.ChangePaladinState(new PaladinAttack(paladin));
         }
+        else if (paladin.CheckDeath())
+        {
+            paladin.ChangePaladinState(new PaladinDeath(paladin));
+        }
     }
 
     public override void Exit()

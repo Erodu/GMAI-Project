@@ -119,20 +119,16 @@ public class Paladin : MonoBehaviour
         }
     }
 
-    void CheckDeath()
+    public bool CheckDeath()
     {
         if (hitPoints <= 0)
         {
-            paladinAgent.isStopped = true;
-            paladinAnim.SetTrigger("Die");
-            StartCoroutine(DeathDelay());
+            return true;
         }
-    }
-
-    IEnumerator DeathDelay()
-    {
-        yield return new WaitForSeconds(5f);
-        this.gameObject.SetActive(false);
+        else
+        {
+            return false;
+        }
     }
 
     #endregion
