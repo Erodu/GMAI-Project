@@ -28,10 +28,10 @@ public class Paladin : MonoBehaviour
     [HideInInspector]
     public bool roaming;
 
-    [HideInInspector]
-    public bool playerDetected;
+    //[HideInInspector]
+    //public bool playerDetected;
 
-    float detectionProximity = 12f;
+    //float detectionProximity = 12f;
 
     Collider[] hitColliders;
 
@@ -77,23 +77,23 @@ public class Paladin : MonoBehaviour
         return finalPos;
     }
 
-    void FindPlayer()
-    {
-        hitColliders = Physics.OverlapSphere(transform.position, detectionProximity);
+    //void FindPlayer()
+    //{
+    //    hitColliders = Physics.OverlapSphere(transform.position, detectionProximity);
 
-        foreach (var hitCollider in hitColliders)
-        {
-            if (hitCollider.transform == playerTransform)
-            {
-                playerDetected = true;
-                break;
-            }
-            else
-            {
-                playerDetected = false;
-            }
-        }
-    }
+    //    foreach (var hitCollider in hitColliders)
+    //    {
+    //        if (hitCollider.transform == playerTransform)
+    //        {
+    //            playerDetected = true;
+    //            break;
+    //        }
+    //        else
+    //        {
+    //            playerDetected = false;
+    //        }
+    //    }
+    //}
 
     void CheckMovementAnim()
     {
@@ -146,7 +146,7 @@ public class Paladin : MonoBehaviour
         m_Idle = new PaladinIdle(this);
         m_Current = m_Idle;
         m_Current.Enter();
-        playerDetected = false;
+        //playerDetected = false;
     }
 
     // Update is called once per frame
@@ -154,7 +154,7 @@ public class Paladin : MonoBehaviour
     {
         m_Current.Execute();
 
-        FindPlayer();
+        //FindPlayer();
         CheckMovementAnim();
         CheckDeath();
     }

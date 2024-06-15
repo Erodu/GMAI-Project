@@ -19,7 +19,7 @@ public class PaladinIdle : PaladinStates
     public override void Execute()
     {
         Roam();
-        if (paladin.playerDetected && paladin.boximon.isDead)
+        if (paladin.boximon.isDead)
         {
             paladin.ChangePaladinState(new PaladinAttack(paladin));
         }
